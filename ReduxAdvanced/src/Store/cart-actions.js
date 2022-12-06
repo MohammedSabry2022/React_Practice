@@ -19,10 +19,11 @@ export const fetchCartData = () => {
 
     try {
       const cartData = await fetchData();
+
       dispatch(
         cartActions.replaceCart({
-          items: cartData.items || [],
-          totalQuantity: cartData.totalQuantity,
+          items: cartData?.items || [],
+          totalQuantity: cartData?.totalQuantity || 0,
         })
       );
     } catch (error) {
@@ -30,7 +31,7 @@ export const fetchCartData = () => {
         uiActions.showNotification({
           status: "error",
           title: "Error!",
-          message: "Fetching cart data failed!",
+          message: error.message,
         })
       );
     }
